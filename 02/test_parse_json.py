@@ -14,7 +14,8 @@ class TestParseJson(unittest.TestCase):
         with mock.patch("parse_json.func") as mock_func:
             mock_func.return_value = 'new_value'
             new_json = '{"key1": "Word1 new_value", "key2": "word2 word3"}'
-            self.assertEqual(parse_json(self.old_json, mock_func, self.required_fields, self.keywords), new_json)
+            self.assertEqual(parse_json(self.old_json, mock_func, self.required_fields,
+                                        self.keywords), new_json)
 
     def test_invalid_key(self):
         with mock.patch("parse_json.func") as mock_func:
@@ -31,11 +32,13 @@ class TestParseJson(unittest.TestCase):
             mock_func.return_value = 'new_value'
             self.keywords = ['invalid_keyword']
             new_json = self.old_json
-            self.assertEqual(parse_json(self.old_json, mock_func, self.required_fields, self.keywords), new_json)
+            self.assertEqual(parse_json(self.old_json, mock_func, self.required_fields,
+                                        self.keywords), new_json)
 
     def test_several_fields(self):
         with mock.patch("parse_json.func") as mock_func:
             mock_func.return_value = 'new_value'
             self.required_fields = ["key1", "key2"]
             new_json = '{"key1": "Word1 new_value", "key2": "new_value word3"}'
-            self.assertEqual(parse_json(self.old_json, mock_func, self.required_fields, self.keywords), new_json)
+            self.assertEqual(parse_json(self.old_json, mock_func, self.required_fields,
+                                        self.keywords), new_json)

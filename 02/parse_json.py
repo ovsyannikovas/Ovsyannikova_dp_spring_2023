@@ -10,9 +10,9 @@ def parse_json(json_str: str, keyword_callback, required_fields=None, keywords=N
     for field in required_fields:
         value = json_doc[field]
         words = value.split()
-        for i in range(len(words)):
-            if words[i] in keywords:
-                words[i] = str(keyword_callback(words[i]))
+        for i, val in enumerate(words):
+            if val in keywords:
+                words[i] = str(keyword_callback(val))
                 json_doc[field] = ' '.join(words)
     # print(json_doc)
     return json.dumps(json_doc)
