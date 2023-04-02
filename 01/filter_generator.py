@@ -1,9 +1,11 @@
-def filter_generator(fileobject, words: list):
+def filter_generator(words: list, fileobject=None, filename=None):
     words_set = set(map(lambda w: w.lower(), words))
 
-    lines = fileobject.readlines()
+    if filename:
+        fileobject = open(filename, 'r', encoding='UTF-8')
 
-    for line in lines:
-        line_set = set(line.lower().split())
-        if words_set & line_set:
-            yield line
+    with fileobject as file:
+        for line in file:
+            line_set = set(line.lower().split())
+            if words_set & line_set:
+                yield line
