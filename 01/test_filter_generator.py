@@ -10,10 +10,10 @@ class TestGenerator(unittest.TestCase):
         self.assertEqual(list(gen), ['а Роза упала на лапу Азора'])
 
     def test_found_several(self):
-        file = io.StringIO('а Роза упала на лапу Азора\n алая РОЗА\n Азор')
+        file = io.StringIO('а Роза упала на лапу Азора\nалая РОЗА\nАзор')
         gen = filter_generator(['РоЗа'], fileobject=file)
         self.assertEqual(list(gen), ['а Роза упала на лапу Азора\n',
-                                     ' алая РОЗА\n'])
+                                     'алая РОЗА\n'])
 
     def test_not_found(self):
         file = io.StringIO('а Роза упала на лапу Азора')
