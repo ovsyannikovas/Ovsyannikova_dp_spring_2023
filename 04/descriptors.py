@@ -3,7 +3,7 @@ class Integer:
         self.__value = None
 
     def __set__(self, instance, value):
-        if instance(value, int):
+        if isinstance(value, int):
             self.__value = value
         else:
             raise Exception('Недопустимое значение для целого числа.')
@@ -49,8 +49,3 @@ class Data:
         self.num = num
         self.name = name
         self.price = price
-
-
-if __name__ == "__main__":
-    data = Data(5, 'Sveta', 9999)
-    print(data.num, data.name, data.price)
