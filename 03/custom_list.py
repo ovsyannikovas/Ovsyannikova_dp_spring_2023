@@ -1,20 +1,16 @@
 class CustomList(list):
-    def __init__(self, lst):
-        super().__init__()
-        self.lst = lst
-
     @staticmethod
     def normalize_len(lst1, lst2):
+        new_lst1, new_lst2 = lst1.copy(), lst2.copy()
         difference = len(lst1) - len(lst2)
         if difference > 0:
-            lst2 += [0] * difference
+            new_lst2 += [0] * difference
         elif difference < 0:
-            lst1 += [0] * -difference
-        return lst1, lst2
+            new_lst1 += [0] * -difference
+        return new_lst1, new_lst2
 
     def __add__(self, other):
-        other_lst = other if not isinstance(other, CustomList) else other.lst
-        lst, other_lst = self.normalize_len(self.lst, other_lst)
+        lst, other_lst = self.normalize_len(self, other)
         result = [v + other_lst[i] for i, v in enumerate(lst)]
         return CustomList(result)
 
@@ -22,34 +18,33 @@ class CustomList(list):
         return self.__add__(other)
 
     def __sub__(self, other):
-        other_lst = other if not isinstance(other, CustomList) else other.lst
-        lst, other_lst = self.normalize_len(self.lst, other_lst)
+        lst, other_lst = self.normalize_len(self, other)
         result = [v - other_lst[i] for i, v in enumerate(lst)]
         return CustomList(result)
 
     def __rsub__(self, other):
-        other_lst = other if not isinstance(other, CustomList) else other.lst
-        lst, other_lst = self.normalize_len(self.lst, other_lst)
+        lst, other_lst = self.normalize_len(self, other)
         result = [other_lst[i] - v for i, v in enumerate(lst)]
         return CustomList(result)
 
     def __eq__(self, other):
-        return sum(self.lst) == sum(other.lst)
+        return sum(self) == sum(other)
 
     def __ne__(self, other):
-        return sum(self.lst) != sum(other.lst)
+        return sum(self) != sum(other)
 
     def __ge__(self, other):
-        return sum(self.lst) >= sum(other.lst)
+        return sum(self) >= sum(other)
 
     def __gt__(self, other):
-        return sum(self.lst) > sum(other.lst)
+        return sum(self) > sum(other)
 
     def __lt__(self, other):
-        return sum(self.lst) < sum(other.lst)
+        return sum(self) < sum(other)
 
     def __le__(self, other):
-        return sum(self.lst) <= sum(other.lst)
+        return sum(self) <= sum(other)
 
     def __str__(self):
-        return f'{self.lst} Сумма: {sum(self.lst)}'
+        lst_str = super().__str__()
+        return f'{lst_str} Сумма: {sum(self)}'
