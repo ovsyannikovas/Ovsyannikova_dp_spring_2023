@@ -7,10 +7,11 @@ import click as click
 
 
 class Client:
-    def __init__(self, request_file, host='127.0.0.1', port=5000, threads=5):
+    def __init__(self, request_file=None, urls_list=None, host='127.0.0.1', port=5000, threads=5):
         self.host = host
         self.port = port
         self.request_file = request_file
+        self.urls = urls_list
         self.threads = threads
 
     def start(self):
@@ -38,11 +39,12 @@ class Client:
             sock.close()
 
     def get_url_list(self):
-        with open(self.request_file, 'r', encoding='utf-8') as file:
-            urls = json.load(file)
+        if not self.urls:
+            with open(self.request_file, 'r', encoding='utf-8') as file:
+                self.urls = json.load(file)
 
-        step = math.ceil(len(urls) / self.threads)
-        result = [urls[i:i + step] for i in range(0, len(urls), step)]
+        step = math.ceil(len(self.urls) / self.threads)
+        result = [self.urls[i:i + step] for i in range(0, len(self.urls), step)]
 
         return result
 
