@@ -40,7 +40,6 @@ class Server:
             data = client.recv(1024)
 
             await self.worker_thread(data.decode(), self.top_words, client)
-            time.sleep(0.5)
 
         await self.stop()
 
@@ -80,7 +79,7 @@ async def main(w=5, k=3):
     await task
 
     while True:
-        time.sleep(1)
+        await asyncio.sleep(1)
 
 
 if __name__ == '__main__':
