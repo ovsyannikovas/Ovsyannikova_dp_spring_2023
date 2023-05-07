@@ -7,18 +7,21 @@ import click as click
 
 
 class Client:
-    def __init__(self, request_file=None, urls_list=None, host='127.0.0.1', port=5000, threads=5):
+    def __init__(self, request_file=None, urls_list=None, host='127.0.0.1', port=5000, connections=10):
         self.host = host
         self.port = port
         self.request_file = request_file
         self.urls = urls_list
-        self.threads = threads
+        self.connections = connections
 
     async def start(self):
         url_list = await self.get_url_list()
 
-        for url in url_list:
-            await self.worker_thread(url)
+        tasks = [
+            asyncio.create_task(self.worker_thread(url))
+            for url in url_list
+        ]
+        await asyncio.gather(*tasks)
 
     async def worker_thread(self, url_list):
         for url in url_list:
@@ -37,16 +40,16 @@ class Client:
             with open(self.request_file, 'r', encoding='utf-8') as file:
                 self.urls = json.load(file)
 
-        step = math.ceil(len(self.urls) / self.threads)
+        step = math.ceil(len(self.urls) / self.connections)
         result = [self.urls[i:i + step] for i in range(0, len(self.urls), step)]
 
         return result
 
 
-@click.argument('threads', default=5)
+@click.option('-c', default=10)
 @click.argument('filename', default='urls.json')
-async def main(threads=5, filename='urls.json'):
-    client = Client(filename, threads=threads)
+async def main(c=10, filename='urls.json'):
+    client = Client(filename, connections=c)
     task = asyncio.create_task(client.start())
     await task
 

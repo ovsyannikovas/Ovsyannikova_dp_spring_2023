@@ -1,7 +1,6 @@
 import asyncio
 import json
 import socket
-import time
 from collections import Counter
 
 import aiohttp
@@ -9,11 +8,9 @@ import click as click
 
 
 class Server:
-    def __init__(self, workers, top_words, host='127.0.0.1', port=5000):
+    def __init__(self, top_words, host='127.0.0.1', port=5000):
         self.host = host
         self.port = port
-        self.workers = workers
-        self.threads = 0
         self.top_words = top_words
         self.socket = None
         self.parsed_urls = 0
@@ -33,9 +30,6 @@ class Server:
         self.socket.listen(1000)
 
         while await self.is_running():
-            if self.threads >= self.workers:
-                continue
-
             client, _ = self.socket.accept()
             data = client.recv(1024)
 
@@ -52,6 +46,7 @@ class Server:
             client.send('Ошибка при открытии URL.'.encode())
         client.close()
 
+        self.parsed_urls += 1
         print(f'parsed urls: {self.parsed_urls}')
 
     @staticmethod
@@ -72,9 +67,8 @@ class Server:
 
 
 @click.option('-w', default=5)
-@click.option('-k', default=3)
-async def main(w=5, k=3):
-    server = Server(w, k)
+async def main(w=5):
+    server = Server(w)
     task = asyncio.create_task(server.start())
     await task
 
