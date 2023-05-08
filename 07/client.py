@@ -7,7 +7,8 @@ import click as click
 
 
 class Client:
-    def __init__(self, request_file=None, urls_list=None, host='127.0.0.1', port=5000, connections=10):
+    def __init__(self, request_file=None, urls_list=None,
+                 host='127.0.0.1', port=5000, connections=10):
         self.host = host
         self.port = port
         self.request_file = request_file
@@ -41,7 +42,8 @@ class Client:
                 self.urls = json.load(file)
 
         step = math.ceil(len(self.urls) / self.connections)
-        result = [self.urls[i:i + step] for i in range(0, len(self.urls), step)]
+        result = [self.urls[i:i + step]
+                  for i in range(0, len(self.urls), step)]
 
         return result
 

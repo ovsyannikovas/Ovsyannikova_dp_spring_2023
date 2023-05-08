@@ -12,7 +12,8 @@ class TestClientAndServer(unittest.TestCase):
 
     async def test_server_and_client(self):
         with mock.patch('server.Server.get_top_words') as mock_model:
-            mock_model.return_value = json.dumps({'good': 0}, ensure_ascii=False)
+            mock_model.return_value = json.dumps({'good': 0},
+                                                 ensure_ascii=False)
 
             urls = [
                 'https://vk.com/',
@@ -29,12 +30,15 @@ class TestClientAndServer(unittest.TestCase):
             await server.stop()
 
             self.assertEqual(mock_model.call_count, 2)
-            self.assertEqual(mock_model.call_args_list, [call(5, 'https://vk.com/'), call(5, 'https://mail.ru/')])
+            self.assertEqual(mock_model.call_args_list,
+                             [call(5, 'https://vk.com/'),
+                              call(5, 'https://mail.ru/')])
 
     def test_get_top_words_method(self):
         url = 'https://vk.com/'
         with mock.patch('server.Server.get_top_words') as mock_model:
-            mock_model.return_value = json.dumps({'good': 0}, ensure_ascii=False)
+            mock_model.return_value = json.dumps(
+                {'good': 0}, ensure_ascii=False)
             res = asyncio.run(Server.get_top_words(5, url))
             expected_res = '{"good": 0}'
 
