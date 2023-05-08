@@ -7,11 +7,13 @@ from unittest.mock import call
 from server import Server
 from client import Client
 
+
 class TestClientAndServer(unittest.TestCase):
 
     def test_server_and_client(self):
         with mock.patch('server.Server.get_top_words') as mock_model:
-            mock_model.return_value = json.dumps({'good': 0}, ensure_ascii=False)
+            mock_model.return_value = json.dumps(
+                {'good': 0}, ensure_ascii=False)
 
             urls = [
                 'https://vk.com/',
@@ -29,12 +31,15 @@ class TestClientAndServer(unittest.TestCase):
             server.stop()
 
             self.assertEqual(mock_model.call_count, 2)
-            self.assertEqual(mock_model.call_args_list, [call(5, 'https://vk.com/'), call(5, 'https://mail.ru/')])
+            self.assertEqual(mock_model.call_args_list,
+                             [call(5, 'https://vk.com/'),
+                              call(5, 'https://mail.ru/')])
 
     def test_get_top_words_method(self):
         url = 'https://vk.com/'
         res = Server.get_top_words(5, url)
-        expected_res = '{"0": 60, "@keyframes": 59, "<div": 34, "=": 24, "</div>": 22}'
+        expected_res = '{"0": 60, "@keyframes": 59, ' \
+                       '"<div": 34, "=": 24, "</div>": 22}'
 
         self.assertEqual(res, expected_res)
 
