@@ -74,7 +74,7 @@ class LRUCache:
 
 class SomeFilter(logging.Filter):
     def filter(self, record):
-        return len(record.msg.split()) % 2 == 0
+        return len(record.msg.split()) % 2 != 0
 
 
 def set_logger_stdout(stdout, filter):
