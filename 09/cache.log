@@ -1,0 +1,18 @@
+2023-05-18 09:48:56,173	LRUCache	INFO	Adding new element value0 with key 0 in cache
+2023-05-18 09:48:56,174	LRUCache	INFO	Adding new element value1 with key 1 in cache
+2023-05-18 09:48:56,174	LRUCache	INFO	Adding new element value2 with key 2 in cache
+2023-05-18 09:48:56,174	LRUCache	INFO	Adding new element value3 with key 3 in cache
+2023-05-18 09:48:56,174	LRUCache	INFO	Adding new element value4 with key 4 in cache
+2023-05-18 09:48:56,174	LRUCache	INFO	Was return element value0 with key 0
+2023-05-18 09:48:56,174	LRUCache	INFO	Was return element value1 with key 1
+2023-05-18 09:48:56,174	LRUCache	INFO	Was return element value2 with key 2
+2023-05-18 09:48:56,174	LRUCache	INFO	Was return element value3 with key 3
+2023-05-18 09:48:56,175	LRUCache	INFO	Was return element value4 with key 4
+2023-05-18 09:48:56,175	LRUCache	INFO	Key 0 already exist in cache
+2023-05-18 09:48:56,175	LRUCache	INFO	Deleting element value0 with key 0 in cache
+2023-05-18 09:48:56,175	LRUCache	INFO	Adding new element newvalue0 with key 0 in cache
+2023-05-18 09:48:56,175	LRUCache	INFO	Was return element newvalue0 with key 0
+2023-05-18 09:48:56,176	LRUCache	INFO	Adding new element value5 with key 5 in cache
+2023-05-18 09:48:56,176	LRUCache	WARNING	Cache is full
+2023-05-18 09:48:56,176	LRUCache	INFO	Deleting element value1 with key 1 in cache
+2023-05-18 09:48:56,176	LRUCache	WARNING	Not existing key 1 in cache
