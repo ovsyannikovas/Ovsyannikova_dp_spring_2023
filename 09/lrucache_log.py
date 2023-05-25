@@ -44,7 +44,8 @@ class LRUCache:
     def set(self, key, value):
         if key in self.dic:
             logger.info('Key %s already exist in cache', key)
-            logger.info('Deleting element %s with key %s in cache', self.dic[key].val, key)
+            logger.info('Deleting element %s with key %s in cache',
+                        self.dic[key].val, key)
             self._remove_node(self.dic[key])
         new_node = Node(key, value)
         logger.info('Adding new element %s with key %s in cache', value, key)
@@ -54,7 +55,8 @@ class LRUCache:
         if len(self.dic) > self.limit:
             logger.warning('Cache is full')
             new_node = self.head.next
-            logger.info('Deleting element %s with key %s in cache', new_node.val, new_node.key)
+            logger.info('Deleting element %s with key %s in cache',
+                        new_node.val, new_node.key)
             self._remove_node(new_node)
             del self.dic[new_node.key]
 
@@ -77,15 +79,15 @@ class SomeFilter(logging.Filter):
         return len(record.msg.split()) % 2 != 0
 
 
-def set_logger_stdout(stdout, filter):
+def set_logger_stdout(stdout_option, filter_option):
     handler = logging.StreamHandler()
-    if stdout:
+    if stdout_option:
         stdout_log_format = logging.Formatter(
             '[%(asctime)s] [%(threadName)s] (%(name)s): %(message)s'
         )
         handler.setFormatter(stdout_log_format)
 
-    if filter:
+    if filter_option:
         handler.addFilter(SomeFilter())
 
     logger.addHandler(handler)
