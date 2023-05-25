@@ -13,7 +13,11 @@ class CustomMeta(type):
         return super().__new__(mcs, name, bases, custom_classdict)
 
     def __setattr__(cls, name, val):
-        cls.__dict__[f'custom_{name}'] = val
+        if name.startswith('__') and name.endswith('__'):
+            key = name
+        else:
+            key = f'custom_{name}'
+        cls.__dict__[key] = val
 
 
 class CustomClass(metaclass=CustomMeta):
